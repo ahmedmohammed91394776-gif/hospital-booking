@@ -8,19 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%); color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
-        header { background: white; padding: 1rem 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 12px; color: #0284c7; font-weight: 800; font-size: 1.3rem; }
+        body { 
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #1e293b; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 12px; color: #0284c7; font-weight: 800; font-size: 1.3rem; }
         .container { max-width: 650px; margin: 2rem auto; padding: 0 1rem; width: 100%; }
-        .card { background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .card { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); border-radius: 20px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.3); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .full-width { grid-column: 1 / -1; }
-        label { font-weight: 600; font-size: 0.9rem; color: #475569; }
-        input, select { padding: 0.75rem; border: 1.5px solid #e2e8f0; border-radius: 8px; outline: none; background: #f8fafc; font-size: 0.95rem; }
-        input:focus, select:focus { border-color: #0284c7; background: white; }
-        .btn { background: linear-gradient(135deg, #0284c7, #0d9488); color: white; border: none; padding: 0.9rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn:hover { opacity: 0.95; }
-        .alert { display: none; background: #dcfce7; color: #166534; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center; font-weight: 600; border: 1px solid #bbf7d0; }
+        label { font-weight: 700; font-size: 0.9rem; color: #334155; }
+        input, select { padding: 0.85rem; border: 1.5px solid #cbd5e1; border-radius: 10px; outline: none; background: #f8fafc; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; }
+        input:focus, select:focus { border-color: #0284c7; background: #ffffff; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15); }
+        .btn { background: linear-gradient(135deg, #0284c7, #0d9488); color: white; border: none; padding: 1rem; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 1.05rem; display: flex; justify-content: center; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3); }
+        .alert { display: none; background: #dcfce7; color: #166534; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center; font-weight: 700; border: 1px solid #bbf7d0; }
     </style>
 </head>
 <body>
@@ -32,8 +39,8 @@
 
     <div class="container">
         <div class="card">
-            <h2 style="text-align: center; color: #0f172a;">احجز موعدك الآن</h2>
-            <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 4px;">املأ البيانات التالية وسيتم تأكيد حجزك فوراً</p>
+            <h2 style="text-align: center; color: #0f172a; font-weight: 800;">احجز موعدك الآن</h2>
+            <p style="text-align: center; color: #64748b; font-size: 0.95rem; margin-top: 4px; font-weight: 600;">املأ البيانات التالية وسيتم تأكيد حجزك فوراً</p>
 
             <form id="bookingForm">
                 <div class="form-grid">
@@ -63,8 +70,8 @@
                         <label>الوقت المفضّل</label>
                         <select id="time" required>
                             <option value="">اختر الوقت...</option>
-                            <option value="صباحاً (10 - 2)">صباحاً (10:00 ص - 02:00 م)</option>
-                            <option value="مساءً (6 - 10)">مساءً (06:00 م - 10:00 م)</option>
+                            <option value="الفترة الأولى (3 ظهراً - 6 مساءً)">الفترة الأولى (03:00 ظهراً - 06:00 مساءً)</option>
+                            <option value="الفترة الثانية (6 مساءً - 9 مساءً)">الفترة الثانية (06:00 مساءً - 09:00 مساءً)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -72,8 +79,8 @@
                         <input type="text" id="name" placeholder="اكتب اسمك كاملاً" required>
                     </div>
                     <div class="form-group">
-                        <label>رقم الهاتف</label>
-                        <input type="tel" id="phone" placeholder="01XXXXXXXXX" required>
+                        <label>رقم الهاتف (أرقام فقط)</label>
+                        <input type="tel" id="phone" placeholder="01XXXXXXXXX" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                     </div>
                     <div class="form-group full-width">
                         <button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i> تأكيد الحجز الآن</button>
@@ -85,8 +92,7 @@
     </div>
 
     <script>
-        // ضع رابط قاعدة بيانات Firebase الخاصة بك هنا
-        const FIREBASE_DB_URL ="https://hospital-booking-39343-default-rtdb.firebaseio.com"; 
+        const FIREBASE_DB_URL = "https://hospital-booking-39343-default-rtdb.firebaseio.com"; 
 
         document.getElementById('bookingForm').addEventListener('submit', async function(e) {
             e.preventDefault();

@@ -8,64 +8,95 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
-        body { background: #f1f5f9; color: #0f172a; padding-bottom: 2rem; }
-        header { background: #0f172a; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
-        .grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 15px; }
-        input, select { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
-        .btn-add { background: #0284c7; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; text-align: right; }
-        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
-        th { background: #f8fafc; color: #64748b; font-weight: 700; }
-        .badge { padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
-        .pending { background: #fef3c7; color: #d97706; }
-        .confirmed { background: #dcfce7; color: #15803d; }
-        .btn-action { border: none; background: none; cursor: pointer; font-size: 1.1rem; margin-left: 6px; }
+        body { 
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #1e293b; 
+            min-height: 100vh; 
+            padding-bottom: 3rem;
+        }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: #0284c7; font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.2); margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.3); }
+        .card-title { font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        
+        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1rem; }
+        input, select { padding: 0.75rem; border: 1.5px solid #cbd5e1; border-radius: 8px; outline: none; background: #f8fafc; font-size: 0.9rem; font-weight: 600; }
+        input:focus, select:focus { border-color: #0284c7; background: #ffffff; }
+        
+        .btn-add { background: #0284c7; color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-add:hover { background: #0369a1; }
+
+        .btn-notif { background: #10b981; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-notif:hover { background: #059669; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 1rem; text-align: right; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        th { background: #f8fafc; color: #475569; font-weight: 700; }
+        
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; }
+        .badge-pending { background: #fef3c7; color: #d97706; }
+        .badge-confirmed { background: #dcfce7; color: #15803d; }
+        
+        .action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px 8px; border-radius: 4px; }
+        .btn-toggle { color: #0284c7; }
+        .btn-delete { color: #ef4444; }
+        
+        .empty-msg { text-align: center; padding: 2rem; color: #94a3b8; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <header>
-        <div>
-            <h2>مستشفى ميت فضالة الخيري</h2>
-            <small style="color: #94a3b8;">لوحة التحكم وإدارة الحجوزات</small>
+        <div class="logo">
+            <i class="fa-solid fa-hospital-user fa-lg"></i>
+            <span>مستشفى ميت فضالة الخيري</span>
         </div>
-        <button onclick="requestNotification()" style="padding: 8px 15px; background: #22c55e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+        <button class="btn-notif" onclick="requestNotification()">
             <i class="fa-solid fa-bell"></i> تفعيل الإشعارات والتنبيهات
         </button>
     </header>
 
     <div class="container">
         
-        <!-- نموذج الإدارة: يمكنك الحجز منه بنفسك -->
+        <!-- إضافة حجز مباشر -->
         <div class="card">
-            <h3><i class="fa-solid fa-user-plus"></i> إضافة حجز جديد بواسطة الإدارة</h3>
-            <form id="adminBookingForm">
-                <div class="grid-form">
-                    <input type="text" id="aName" placeholder="اسم المريض" required>
-                    <input type="tel" id="aPhone" placeholder="رقم الهاتف" required>
-                    <select id="aSpec" required>
-                        <option value="">التخصص...</option>
-                        <option value="باطنة">باطنة</option>
-                        <option value="أطفال">أطفال</option>
-                        <option value="عظام">عظام</option>
-                        <option value="أسنان">أسنان</option>
-                    </select>
-                    <select id="aDoc" required>
-                        <option value="">الطبيب...</option>
-                        <option value="د. أحمد محمود">د. أحمد محمود</option>
-                        <option value="د. سارة علي">د. سارة علي</option>
-                    </select>
-                    <input type="date" id="aDate" required>
-                    <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> حفظ الحجز</button>
-                </div>
+            <div class="card-title">
+                <i class="fa-solid fa-user-plus" style="color: #0284c7;"></i>
+                إضافة حجز جديد بواسطة الإدارة
+            </div>
+            <form id="adminBookingForm" class="admin-form">
+                <input type="text" id="admName" placeholder="اسم المريض" required>
+                <input type="tel" id="admPhone" placeholder="رقم الهاتف (أرقام فقط)" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                <select id="admSpecialty" required>
+                    <option value="">التخصص...</option>
+                    <option value="باطنة">باطنة</option>
+                    <option value="أطفال">أطفال</option>
+                    <option value="عظام">عظام</option>
+                    <option value="أسنان">أسنان</option>
+                </select>
+                <select id="admDoctor" required>
+                    <option value="">الطبيب...</option>
+                    <option value="د. أحمد محمود">د. أحمد محمود</option>
+                    <option value="د. سارة علي">د. سارة علي</option>
+                </select>
+                <input type="date" id="admDate" required>
+                <select id="admTime" required>
+                    <option value="">الوقت...</option>
+                    <option value="الفترة الأولى (3 ظهراً - 6 مساءً)">الفترة الأولى (3 ظهراً - 6 مساءً)</option>
+                    <option value="الفترة الثانية (6 مساءً - 9 مساءً)">الفترة الثانية (6 مساءً - 9 مساءً)</option>
+                </select>
+                <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> حفظ الحجز</button>
             </form>
         </div>
 
-        <!-- جدول الحجوزات: يعرض كل الذين سجلوا -->
+        <!-- قائمة الحجوزات -->
         <div class="card">
-            <h3><i class="fa-solid fa-list-check"></i> الحجوزات القادمة المباشرة</h3>
+            <div class="card-title">
+                <i class="fa-solid fa-list-check" style="color: #0284c7;"></i>
+                الحجوزات القادمة المباشرة
+            </div>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -78,8 +109,8 @@
                             <th>إجراءات الإدارة</th>
                         </tr>
                     </thead>
-                    <tbody id="adminTable">
-                        <!-- تُحمل الحجوزات تلقائياً هنا -->
+                    <tbody id="bookingsTable">
+                        <tr><td colspan="6" class="empty-msg">جاري تحميل البيانات...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -88,17 +119,15 @@
     </div>
 
     <script>
-        // ضع رابط قاعدة بيانات Firebase الخاصة بك هنا
         const FIREBASE_DB_URL = "https://hospital-booking-39343-default-rtdb.firebaseio.com"; 
         let previousCount = 0;
 
         function requestNotification() {
             Notification.requestPermission().then(perm => {
-                if(perm === 'granted') alert('تم تفعيل نظام الإشعارات الصوتية والمصورة بنجاح!');
+                if(perm === 'granted') alert('تم تفعيل نظام الإشعارات الصوتية والمنبثقة بنجاح!');
             });
         }
 
-        // تشغيل صوت + إشعار عند حجز جديد
         function triggerAlert(patientName) {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = ctx.createOscillator();
@@ -108,50 +137,63 @@
             osc.stop(ctx.currentTime + 0.4);
 
             if (Notification.permission === 'granted') {
-                new Notification("حجز جديد! 🩺", {
-                    body: `قام المريض [ ${patientName} ] بتسجيل حجز جديد الآن.`
+                new Notification("حجز جديد!", {
+                    body: `تم إضافة حجز جديد باسم: ${patientName}`,
+                    icon: "https://cdn-icons-png.flaticon.com/512/3063/3063176.png"
                 });
             }
         }
 
-        // جلب البيانات وقراءتها كل فترة
         async function fetchBookings() {
             try {
                 const res = await fetch(`${FIREBASE_DB_URL}/bookings.json`);
                 const data = await res.json();
-                const tbody = document.getElementById('adminTable');
-                tbody.innerHTML = '';
+                const tableBody = document.getElementById('bookingsTable');
+                tableBody.innerHTML = '';
 
-                if(!data) return;
+                if (!data) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="empty-msg">لا توجد حجوزات مسجلة حتى الآن</td></tr>';
+                    previousCount = 0;
+                    return;
+                }
 
                 const keys = Object.keys(data);
-                if (previousCount > 0 && keys.length > previousCount) {
-                    const lastItem = data[keys[keys.length - 1]];
-                    triggerAlert(lastItem.name);
+                if (keys.length > previousCount && previousCount !== 0) {
+                    const lastBooking = data[keys[keys.length - 1]];
+                    triggerAlert(lastBooking.name);
                 }
                 previousCount = keys.length;
 
-                for (let id in data) {
-                    const item = data[id];
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><b>${item.name}</b></td>
-                        <td>${item.phone}</td>
-                        <td>${item.specialty} (${item.doctor})</td>
-                        <td>${item.date} <br><small style="color:#64748b">${item.time || ''}</small></td>
-                        <td><span class="badge ${item.status === 'مؤكد' ? 'confirmed' : 'pending'}">${item.status}</span></td>
-                        <td>
-                            <button class="btn-action" style="color:#16a34a" onclick="toggleStatus('${id}', '${item.status}')" title="تأكيد / تعليق"><i class="fa-solid fa-check-double"></i></button>
-                            <button class="btn-action" style="color:#dc2626" onclick="deleteBooking('${id}')" title="حذف الحجز"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+                keys.reverse().forEach(key => {
+                    const item = data[key];
+                    const isConfirmed = item.status === 'مؤكد';
+                    
+                    const row = `
+                        <tr>
+                            <td><strong>${item.name}</strong></td>
+                            <td><a href="tel:${item.phone}" style="color:#0284c7; text-decoration:none;">${item.phone}</a></td>
+                            <td>${item.specialty} (${item.doctor})</td>
+                            <td>${item.date}<br><small style="color:#64748b;">${item.time}</small></td>
+                            <td><span class="badge ${isConfirmed ? 'badge-confirmed' : 'badge-pending'}">${item.status}</span></td>
+                            <td>
+                                <button class="action-btn btn-toggle" onclick="toggleStatus('${key}', '${item.status}')" title="تغيير الحالة">
+                                    <i class="fa-solid fa-rotate"></i>
+                                </button>
+                                <button class="action-btn btn-delete" onclick="deleteBooking('${key}')" title="حذف الحجز">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
                     `;
-                    tbody.appendChild(tr);
-                }
-            } catch(e) {}
+                    tableBody.innerHTML += row;
+                });
+            } catch (err) {
+                console.error(err);
+            }
         }
 
         async function toggleStatus(id, currentStatus) {
-            const newStatus = currentStatus === 'مؤكد' ? 'معلق' : 'مؤكد';
+            const newStatus = currentStatus === 'معلق' ? 'مؤكد' : 'معلق';
             await fetch(`${FIREBASE_DB_URL}/bookings/${id}.json`, {
                 method: 'PATCH',
                 body: JSON.stringify({ status: newStatus })
@@ -160,37 +202,39 @@
         }
 
         async function deleteBooking(id) {
-            if(confirm('هل تريد حذف هذا الحجز نهائياً؟')) {
-                await fetch(`${FIREBASE_DB_URL}/bookings/${id}.json`, { method: 'DELETE' });
+            if (confirm('هل أنت تأكد من حذف هذا الحجز؟')) {
+                await fetch(`${FIREBASE_DB_URL}/bookings/${id}.json`, {
+                    method: 'DELETE'
+                });
                 fetchBookings();
             }
         }
 
-        // إضافة حجز مباشر من الإدارة
         document.getElementById('adminBookingForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const data = {
-                name: document.getElementById('aName').value,
-                phone: document.getElementById('aPhone').value,
-                specialty: document.getElementById('aSpec').value,
-                doctor: document.getElementById('aDoc').value,
-                date: document.getElementById('aDate').value,
-                time: 'حجز مباشر (إدارة)',
+                name: document.getElementById('admName').value,
+                phone: document.getElementById('admPhone').value,
+                specialty: document.getElementById('admSpecialty').value,
+                doctor: document.getElementById('admDoctor').value,
+                date: document.getElementById('admDate').value,
+                time: document.getElementById('admTime').value,
                 status: 'مؤكد',
                 createdAt: new Date().toLocaleString('ar-EG')
             };
 
             await fetch(`${FIREBASE_DB_URL}/bookings.json`, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
+
             this.reset();
             fetchBookings();
         });
 
-        // الاستعلام والتحديث المستمر كل 4 ثوانٍ
-        setInterval(fetchBookings, 4000);
         fetchBookings();
+        setInterval(fetchBookings, 4000);
     </script>
 </body>
 </html>
